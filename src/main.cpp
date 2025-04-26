@@ -13,7 +13,7 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
-  Serial.println("\nStart systemu");
+  Serial.println("Start systemu");
 }
 
 void loop() {
