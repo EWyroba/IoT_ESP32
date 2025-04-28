@@ -1,8 +1,8 @@
 #include "const.h"
 #include "test-functions.h"
 
-const char* ssid = "UPC1C2E8BC";
-const char* password = "BiszkoptSuszi2137420";
+const char* ssid = "test";
+const char* password = "test";
 const char* mqtt_server = "test.mosquitto.org";
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
