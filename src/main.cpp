@@ -1,29 +1,19 @@
 #include "const.h"
 #include "test-functions.h"
+#include "mqtt.h"
+#include "wifi_conn.h"
+#include "crypto.h"
 
-const char* ssid = "test";
-const char* password = "test";
-const char* mqtt_server = "test.mosquitto.org";
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
-WiFiClient espClient;
-PubSubClient client(espClient);
+
 
 void hashUID(const byte* uid, byte uidSize, byte* outHash);
 void blink(int numOfBlinks);
 void setupWiFi();
 void reconnectAndPublish(char* topic, char* msg) ;
-byte hashResult[32];
 
-// Dane do wiadomości
-char lock_id[5] = "0001";     
-char start_msg[6] = "Start";
-char topic[50] = "rfidlocksystem_WM";
-char hash_UID[65];
-char message[256]; 
-uint16_t message_id = 0;
-bool formatOK = false;
 
 void setup() {
   Serial.begin(115200);
@@ -94,13 +84,6 @@ void loop() {
   delay(1000);
 }
 
-void hashUID(const byte* uid, byte uidSize, byte* outHash) {
-  SHA256 sha256;
-  sha256.reset();
-  sha256.update(uid, uidSize);
-  sha256.finalize(outHash, 32);
-}
-
 void blink(int numOfBlinks) {
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -112,49 +95,8 @@ void blink(int numOfBlinks) {
   }
 }
 
-void setupWiFi() {
-  delay(10);
-  Serial.println();
-  Serial.print("[WiFi] Łączenie z ");
-  Serial.println(ssid);
 
-  WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
 
-  Serial.println();
-  Serial.println("[WiFi] Połączono!");
-  Serial.println(WiFi.localIP());
-}
-
-void reconnectAndPublish(char* topic, char* msg) {
-  // Dopóki nie jesteśmy połączeni...
-  while (!client.connected()) {
-    Serial.print("[MQTT] Próba połączenia... ");
-    
-    String clientId = "ESP32Client-";
-    clientId += String(random(0xffff), HEX);
-    
-    if (client.connect(clientId.c_str())) {
-      Serial.println("Połączono!");  
-      client.publish(lock_id, start_msg);
-      Serial.println("[MQTT] Wiadomość wysłana!");
-    } else {
-      Serial.print("Błąd połączenia, rc=");
-      Serial.print(client.state());
-      Serial.println(" próbuję ponownie za 5 sekund");
-      delay(5000);
-    }
-    return;
-  }
-  if(client.connected()) {
-    // Połączono -> opublikuj wiadomość
-    client.publish(topic, msg);
-    Serial.println("[MQTT] Wiadomość wysłana!");
-  }
-}
 
 
