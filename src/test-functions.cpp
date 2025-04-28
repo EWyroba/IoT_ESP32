@@ -245,49 +245,9 @@ void authTestSplitKey() {
   //   mfrc522.PCD_StopCrypto1();
   // }
   
-  // void checkCard() {
-  //   MFRC522::MIFARE_Key key;
-  //   memset(&key, 0x00, sizeof(MFRC522::MIFARE_Key));
-  //   byte buffer[16];
-  //   byte size;
-    
-  //   // Sprawdź ID użytkownika
-  //   byte block = 1;
-  //   if (mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &mfrc522.uid)) {
-  //     mfrc522.MIFARE_Read(block, buffer, &size);
-  //     if (memcmp(buffer, userID, 4) == 0) {
-  //       Serial.println("ID użytkownika OK");
-  //     } else {
-  //       Serial.println("ID użytkownika nie pasuje");
-  //       return;
-  //     }
-  //   }
-    
-  //   // Sprawdź parametry użytkownika
-  //   block = 2;
-  //   if ( mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &mfrc522.uid)) {
-  //     mfrc522.MIFARE_Read(block, buffer, &size);
-  //     if (memcmp(buffer, userParams, 8) == 0) {
-  //       Serial.println("Parametry użytkownika OK");
-  //     } else {
-  //       Serial.println("Parametry użytkownika nie pasują");
-  //       return;
-  //     }
-  //   }
-  
-  //   // Sprawdź hash
-  //   block = 4;
-  //   if ( mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, &key, &mfrc522.uid)) {
-  //     mfrc522.MIFARE_Read(block, buffer, &size);
-  //     if (memcmp(buffer, expectedHash, 32) == 0) {
-  //       Serial.println("Karta autoryzowana. Oczekiwany hash pasuje.");
-  //       // Otwórz zamek
-  //       openLock();
-  //     } else {
-  //       Serial.println("Hash nie pasuje. Zamek zablokowany.");
-  //     }
-  //   }
-  // }
+  bool checkCard() {
+    return false;
+  }
   
   // void openLock() {
   //   // Funkcja do otwierania zamka (np. za pomocą przekaźnika)

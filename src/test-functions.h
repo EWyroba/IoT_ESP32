@@ -7,6 +7,6 @@ void readAndDisplayCardDataNoAuth();
 void authTestSplitKey();
 void authTestOneKey();
 void openLock();
-void checkCard();
+bool checkCard();
 
 #endif
