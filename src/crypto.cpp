@@ -8,3 +8,4 @@ void hashUID(const byte* uid, byte uidSize, byte* outHash) {
     sha256.update(uid, uidSize);
     sha256.finalize(outHash, 32);
 }
+
