@@ -46,13 +46,24 @@ public class DatabaseConnection {
         if (!rs.next()) {
             stmt.executeUpdate("""
                 CREATE TABLE user_data (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    user_id VARCHAR(64),
+                    user_id VARCHAR(64) PRIMARY KEY,
                     name VARCHAR(50),
                     user_type VARCHAR(50)
                 )
             """);
             System.out.println("Utworzono tabelę 'user_data'.");
+        }
+
+        rs = conn.getMetaData().getTables(null, null, "lock_data", new String[] {"TABLE"});
+        if (!rs.next()) {
+            stmt.executeUpdate("""
+                CREATE TABLE lock_data (
+                    lock_id varchar(5) PRIMARY KEY,
+                    room_desc varchar(50),
+                    floor int(2)
+                )
+            """);
+            System.out.println("Utworzono tabelę 'lock_data'.");
         }
 
         // Tabela access_logs
@@ -66,6 +77,8 @@ public class DatabaseConnection {
                     lock_id varchar(5),
                     card_ok BOOLEAN,
                     access_granted BOOLEAN,
+                    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
+                    FOREIGN KEY (lock_id) REFERENCES lock_data(lock_id)
                 )
             """);
             System.out.println("Utworzono tabelę 'access_logs'.");
@@ -78,11 +91,15 @@ public class DatabaseConnection {
                 CREATE TABLE privileges (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     user_id VARCHAR(64),
-                    lock_id varchar(5)
+                    lock_id varchar(5),
+                    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
+                    FOREIGN KEY (lock_id) REFERENCES lock_data(lock_id)
                 )
             """);
             System.out.println("Utworzono tabelę 'privileges'.");
         }
+
+
     }
 
     // Zwraca aktywne połączenie
