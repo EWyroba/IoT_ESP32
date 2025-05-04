@@ -13,6 +13,7 @@ char hash_UID[65];
 char message[256]; 
 uint16_t message_id = 0;
 bool formatOK = false;
+bool accessGranted = false;
 
 void reconnectAndPublish(char* topic, char* msg) {
     // Dopóki nie jesteśmy połączeni...
@@ -38,5 +39,23 @@ void reconnectAndPublish(char* topic, char* msg) {
       // Połączono -> opublikuj wiadomość
       client.publish(topic, msg);
       Serial.println("[MQTT] Wiadomość wysłana!");
+      client.setCallback(callback);
+      client.subscribe("rfidlocksystem_WM/response");
     }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  StaticJsonDocument<256> doc;
+  DeserializationError error = deserializeJson(doc, payload, length);
+
+  if (error) {
+    Serial.print("Błąd deserializacji JSON: ");
+    Serial.println(error.c_str());
+    return;
   }
+
+  // Oczekiwane pola: uid, lock_id, access_granted
+  accessGranted = doc["access_granted"];  // true / false
+  Serial.print("Odpowiedź z serwera - dostęp: ");
+  Serial.println(accessGranted ? "TAK" : "NIE");
+}

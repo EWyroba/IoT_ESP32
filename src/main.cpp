@@ -38,7 +38,25 @@ void loop() {
 
   Serial.println("\nNowa karta wykryta!");
   //saveDataToCard();
-  hashUID(mfrc522.uid.uidByte, 4, hashResult);
+  // Odczyt userID z bloku 1
+  byte buffer[18];
+  byte bufferSize = 18;
+  byte userID_from_card[4];
+
+  for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF;
+
+  if (mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 1, &key, &mfrc522.uid) != MFRC522::STATUS_OK) {
+    Serial.println("Błąd autoryzacji do bloku 1");
+    return;
+  }
+  if (mfrc522.MIFARE_Read(1, buffer, &bufferSize) != MFRC522::STATUS_OK) {
+    Serial.println("Błąd odczytu bloku 1");
+    return;
+  }
+  memcpy(userID_from_card, buffer, 4);  // Zakładamy, że userID to pierwsze 4 bajty
+
+  // Haszowanie userID z karty
+  hashUID(userID_from_card, 4, hashResult);
   
   // Do debugowania
   Serial.print("Hash UID: ");
@@ -57,11 +75,7 @@ void loop() {
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
 
-  // Inkrementacja message_id
-  message_id++;
-  if (message_id > 65535) {
-    message_id = 0;
-  }
+
 
   // Tworzymy JSON z lock_id i hashUID
   StaticJsonDocument<256> doc;
@@ -75,17 +89,36 @@ void loop() {
   reconnectAndPublish(topic, message);
 
   if(formatOK) {
-    // Zapytanie do serwera czy user ma dostęp
-    blink(2);
-    Serial.println("Drzwi otwarte");
+    Serial.println("Zapytanie o dostęp...");
+    accessGranted = false;  // reset flagi
+
+    unsigned long startTime = millis();
+
+    // Czekaj maksymalnie 2 sekundy na odpowiedź
+    while (millis() - startTime < 2000) {
+        client.loop();  // odbieranie wiadomości
+        if (accessGranted) {
+            break;
+        }
+    }
+
+    if (accessGranted) {
+      blink(2);
+      Serial.println("Drzwi otwarte.");
+    } else {
+      blink(5);
+      Serial.println("Odmowa dostępu.");
+    }
   } else {
     blink(5);
-    Serial.println("Brak dostępu!");
+    Serial.println("Nieprawidłowa karta - brak dostępu!");
   }
 
-  //authTestOneKey();
-  //readAndDisplayCardDataNoAuth();
-  //saveDataToCard();
+  // Inkrementacja message_id
+  message_id++;
+  if (message_id > 65535) {
+    message_id = 0;
+  }
   delay(1000);
 }
 
@@ -94,9 +127,9 @@ void blink(int numOfBlinks) {
 
   for (int i = 0; i < numOfBlinks; i++) {
     digitalWrite(LED_BUILTIN, HIGH); // LED ON
-    delay(200);
+    delay(100);
     digitalWrite(LED_BUILTIN, LOW);  // LED OFF
-    delay(200);
+    delay(100);
   }
 }
 

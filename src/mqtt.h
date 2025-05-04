@@ -16,7 +16,9 @@ extern char hash_UID[65];
 extern char message[256]; 
 extern uint16_t message_id;
 extern bool formatOK;
+extern bool accessGranted;
 
-void reconnectAndPublish(char* topic, char* msg) ;
+void reconnectAndPublish(char* topic, char* msg);
+void callback(char* topic, byte* payload, unsigned int length);
 
 #endif
