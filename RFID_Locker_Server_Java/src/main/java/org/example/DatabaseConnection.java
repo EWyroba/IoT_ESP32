@@ -77,7 +77,6 @@ public class DatabaseConnection {
                     lock_id varchar(5),
                     card_ok BOOLEAN,
                     access_granted BOOLEAN,
-                    FOREIGN KEY (user_id) REFERENCES user_data(user_id),
                     FOREIGN KEY (lock_id) REFERENCES lock_data(lock_id)
                 )
             """);

@@ -2,8 +2,8 @@
 
 WiFiClient espClient;
 
-const char* ssid = "ttt";
-const char* password = "ttt";
+const char* ssid = "PK";
+const char* password = "12345678";
 
 void setupWiFi() {
     delay(10);
