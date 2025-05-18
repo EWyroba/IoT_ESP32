@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>RFID Locker Panel</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div class="header">
+  <h1>Panel RFID Locker</h1>
+  <nav>
+    <a onclick="loadData('users')">Użytkownicy</a>
+    <a onclick="loadData('locks')">Pokoje</a>
+    <a onclick="loadData('logs')">Access Logi</a>
+    <a onclick="loadData('privileges')">Uprawnienia</a>
+  </nav>
+</div>
+<div id="addUserFormWrapper" class="form" style="display: none;">
+  <h2>Dodaj użytkownika</h2>
+  <form id="addUserForm">
+    <input type="text" name="user_id" placeholder="ID użytkownika" required />
+    <input type="text" name="name" placeholder="Imię i nazwisko" required />
+    <input type="text" name="user_type" placeholder="Typ użytkownika" required />
+    <button type="submit">Dodaj</button>
+  </form>
+</div>
+<div id="addRoomFormWrapper" class="form" style="display: none;">
+  <h2>Dodaj pokój</h2>
+  <form id="addRoomForm">
+    <input type="text" name="lock_id" placeholder="ID zamka" required />
+    <input type="text" name="desc" placeholder="Opis pokoju" required />
+    <input type="number" name="floor" placeholder="Piętro" required />
+    <button type="submit">Dodaj</button>
+  </form>
+</div>
+<div id="addPrivilegeFormWrapper" class="form" style="display: none;">
+  <h2>Dodaj uprawnienie</h2>
+  <form id="addPrivilegeForm">
+    <label for="userSelect">Użytkownik:</label>
+    <select id="userSelect" name="user_id" required>
+      <option value="" disabled selected>Wybierz użytkownika</option>
+    </select>
+
+    <label for="lockSelect">Pokój / Zamek:</label>
+    <select id="lockSelect" name="lock_id" required>
+      <option value="" disabled selected>Wybierz pokój</option>
+    </select>
+
+    <button type="submit">Dodaj</button>
+  </form>
+</div>
+<div class="content-wrapper">
+  <table id="dataTable"><thead></thead><tbody></tbody></table>
+</div>
+</body>
+</html>

@@ -12,9 +12,9 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "c:/Users/SZYMON/Desktop/IoT_Project/RFID2/.pio/build/esp32dev/firmware.elf",
+            "executable": "/Users/macbookpro/Desktop/IoT/IoT_ESP32/RFID_Locker_ESP32/.pio/build/esp32dev/firmware.elf",
             "projectEnvName": "esp32dev",
-            "toolchainBinDir": "C:/Users/SZYMON/.platformio/packages/toolchain-xtensa-esp32/bin",
+            "toolchainBinDir": "/Users/macbookpro/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": {
                 "type": "PlatformIO",
@@ -25,18 +25,18 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "c:/Users/SZYMON/Desktop/IoT_Project/RFID2/.pio/build/esp32dev/firmware.elf",
+            "executable": "/Users/macbookpro/Desktop/IoT/IoT_ESP32/RFID_Locker_ESP32/.pio/build/esp32dev/firmware.elf",
             "projectEnvName": "esp32dev",
-            "toolchainBinDir": "C:/Users/SZYMON/.platformio/packages/toolchain-xtensa-esp32/bin",
+            "toolchainBinDir": "/Users/macbookpro/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "c:/Users/SZYMON/Desktop/IoT_Project/RFID2/.pio/build/esp32dev/firmware.elf",
+            "executable": "/Users/macbookpro/Desktop/IoT/IoT_ESP32/RFID_Locker_ESP32/.pio/build/esp32dev/firmware.elf",
             "projectEnvName": "esp32dev",
-            "toolchainBinDir": "C:/Users/SZYMON/.platformio/packages/toolchain-xtensa-esp32/bin",
+            "toolchainBinDir": "/Users/macbookpro/.platformio/packages/toolchain-xtensa-esp32/bin",
             "internalConsoleOptions": "openOnSessionStart",
             "loadMode": "manual"
         }

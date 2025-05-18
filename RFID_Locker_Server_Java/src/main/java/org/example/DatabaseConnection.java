@@ -103,6 +103,11 @@ public class DatabaseConnection {
 
     // Zwraca aktywne połączenie
     public static Connection getConnection() {
+        try {
+            connection = DriverManager.getConnection(BASE_URL + DB_NAME, USER, PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }

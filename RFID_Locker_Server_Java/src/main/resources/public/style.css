@@ -1,0 +1,82 @@
+body {
+    font-family: sans-serif;
+    margin: 0px;
+}
+nav {
+    display: flex;
+    align-items: center;
+    gap: 50px
+}
+nav a {
+    cursor: pointer;
+    font-size: 22px; }
+nav a:hover {
+    color: #ffa800;
+}
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    width: 100%;
+}
+th {
+    background-color: #2a6592;
+    color: white;
+    padding: 8px;
+    text-align: left;
+}
+tr {
+    border: 1px solid #2b354f;
+}
+td {
+    padding: 8px;
+    border: 1px solid #2b354f;
+}
+tr.danger {
+    background-color: #ffcccc;
+}
+div.header {
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
+    background-color: #6596e6;
+}
+div.content-wrapper {
+    padding: 0px 50px;
+}
+div.form {
+    padding: 20px 50px 40px 50px;
+    background-color: #a3c7ea;
+    color: #2b354f;
+}
+div.form form {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+div.form form input,
+div.form form select {
+    width: 25%;
+    height: 30px;
+    padding: 0px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+div.form form button {
+    border: none;
+    border-radius: 5px;
+    background-color: #2b354f;
+    color: #fff;
+    width: 100px;
+    font-size: 16px;
+}
+div.form form button:hover,
+div.form form button:active {
+    background-color: #6596e6;
+}
+div.form label {
+    display: flex;
+    align-items: center;
+}

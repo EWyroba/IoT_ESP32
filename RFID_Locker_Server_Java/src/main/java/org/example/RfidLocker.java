@@ -13,6 +13,11 @@ public class RfidLocker {
         String topic = "rfidlocksystem_WM";                    // zamień na swój temat
         String clientId = "RFID_Locker_Server";
         DatabaseConnection.initialize();
+        try {
+            new WebServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         try {
